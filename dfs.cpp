@@ -52,4 +52,15 @@ void dfs(int u) {
     }
 }
 
+vi topoSort;
+
+void topologicalSort(int u){
+    visited[u] = DFS_BLACK;
+    for (size_t i = 0; i < AdjList[u].size(); ++i) {
+        ii v = AdjList[u][i];
+        if (visited[v.first] == DFS_WHITE)
+            topologicalSort(v.first);
+    }
+    topoSort.push_back(u);
+}
 

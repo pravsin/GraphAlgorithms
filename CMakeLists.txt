@@ -3,5 +3,5 @@ project(GraphAlgorithms)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp dfs.cpp dfs.h)
+set(SOURCE_FILES main.cpp dfs.cpp dfs.h bfs.cpp bfs.h)
 add_executable(GraphAlgorithms ${SOURCE_FILES})
