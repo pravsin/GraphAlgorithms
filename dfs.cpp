@@ -100,3 +100,42 @@ void checkGraph(int u){
     }
     visited[u]=DFS_BLACK;
 }
+
+vi dfs_low,articulationPoints;
+int dfsNumber,dfsRoot,rootChildren;
+
+/*
+ *  int main(){
+ *      dfsNumber = 0;
+ *      visited.assign(V,DFS_WHITE);
+ *      dfs_low.assign(V,0);
+ *      parent.assign(V,0);
+ *      articulationPoints.assign(V,0);
+ *      dfsRoot= u;
+ *      articulationPoint_Bridge(u);
+ *  }
+ *
+ */
+
+void articulationPoint_Bridge(int u ){
+    dfs_low[u]= visited[u]=dfsNumber++;
+    for (size_t i = 0; i < AdjList[u].size(); ++i) {
+        ii v = AdjList[u][i];
+        if(visited[v.first]==DFS_WHITE){
+            parent[v.first]=u;
+            if(u == dfsRoot) rootChildren++;
+            articulationPoint_Bridge(v.first);
+
+            if(dfs_low[v.first]>=visited[u]){
+                articulationPoints[u]= true;
+            }
+            if(dfs_low[v.first]>visited[u])
+                cout<<"Edge ("<<u<<" , "<<v.first<<" ) is a bridge";
+            dfs_low[u]=min(dfs_low[u],dfs_low[v.first]);
+        }
+        else if(v.first!= parent[u]){
+            dfs_low[u]=min(dfs_low[u],visited[v.first]);
+        }
+    }
+}
+
