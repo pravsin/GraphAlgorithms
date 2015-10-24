@@ -13,6 +13,15 @@ vi distance(V, (int)INF);
 vi parent;
 vector<vii> AdjList;
 
+/*
+ * BFS - O(V+E) - adjacency list
+ * Bipartite Graph properties
+ * 1. A bipartite graph is a graph that does not contain any odd-length cycles
+ * 2. If a bipartite graph is not connected, it may have more than one bipartition
+ * 3. If |U|=|V|, that is, if the two subsets have equal cardinality, then G is called a balanced bipartite graph
+ * 4. If all vertices on the same side of the bipartition have the same degree, then G is called biregular.
+ * 5.
+ */
 void bfs(int s){
     distance[s]=0;
     queue<int> q;

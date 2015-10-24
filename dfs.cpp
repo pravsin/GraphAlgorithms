@@ -25,7 +25,11 @@ typedef vector<int> vi;
 #define DFS_WHITE -1
 #define DFS_BLACK 1
 
-vi visited;
+#define V 100
+#define INF 1e7
+#define DFS_GRAY 2
+
+vi visited,parent; // visited.assign(V,DFS_WHITE); parent.assign(V,0);
 vector<vii> AdjList;
 
 void dfs_recursion(int u) {
@@ -54,7 +58,7 @@ void dfs(int u) {
 
 vi topoSort;
 
-void topologicalSort(int u){
+void topologicalSort(int u) {
     visited[u] = DFS_BLACK;
     for (size_t i = 0; i < AdjList[u].size(); ++i) {
         ii v = AdjList[u][i];
@@ -64,3 +68,35 @@ void topologicalSort(int u){
     topoSort.push_back(u);
 }
 
+int noofConnectedComponents() {
+    int no = 0;
+    visited.assign(V, DFS_WHITE);
+    for (size_t i = 0; i < V; ++i) {
+        if (visited[i] == DFS_WHITE) {
+            no++;
+            dfs(i);
+        }
+    }
+    return no;
+}
+
+void checkGraph(int u){
+    visited[u]=DFS_GRAY;
+    for (size_t i = 0; i < AdjList[u].size(); ++i) {
+        ii v = AdjList[u][i];
+        if (visited[v.first] == DFS_WHITE){
+            parent[v.first]=u;
+            checkGraph(v.first);
+        }
+        else if(visited[v.first]==DFS_GRAY){
+            if(v.first==parent[u])
+              cout<<"Bidirectional Edge\n";
+            else
+                cout<<"Back Edge (u,v): "<<u<<" "<<v.first<<"\n";
+        }
+        else if(visited[v.first]==DFS_BLACK){
+            cout<<"Cross/Forward Edge (u,v): "<<u<<" "<<v.first<<"\n";
+        }
+    }
+    visited[u]=DFS_BLACK;
+}
